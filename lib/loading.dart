@@ -11,7 +11,7 @@ class LoadingScreen extends StatefulWidget {
 class _LoadingScreenState extends State<LoadingScreen> {
   void getData() async {
     NetworkOperations netops = NetworkOperations(
-        url: 'https://corona.lmao.ninja/v2/all?yesterday=true#');
+        url: 'https://corona.lmao.ninja/v2/all?yesterday=false');
     var coronaCases = await netops.getData();
 
     Navigator.push(
