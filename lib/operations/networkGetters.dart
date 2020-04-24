@@ -6,6 +6,22 @@ class GetDetails {
   GetDetails({@required this.details});
   final format = NumberFormat("#,###,###,###");
 
+  int getTotalCountries() {
+    return details.length;
+  }
+
+  getImage(int x) {
+    return details[x]['countryInfo']['flag'];
+  }
+
+  String getCountryName(int x) {
+    return details[x]['country'];
+  }
+
+  String getCountryFlag(int x) {
+    return details[x]['country'];
+  }
+
   String getCases(int number) {
     return format.format(details[number]['cases']);
   }

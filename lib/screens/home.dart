@@ -2,10 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'loading.dart';
-import 'package:coronaupdate/continents.dart';
-import 'widgets.dart';
-import 'networkOps.dart';
+import 'country.dart';
+import '../loading.dart';
+import 'package:coronaupdate/screens/continents.dart';
+import '../widgets/widgets.dart';
+import '../operations/networkOps.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({this.coronaDetails});
@@ -25,10 +26,11 @@ class _HomePageState extends State<HomePage> {
   double deadPer;
   double activePer;
   var coronaContinentDetails;
+  var coronaCountryDetails;
 
   final format = NumberFormat("#,###,###,###");
 
-  void getContinentData() async {
+  getContinentData() async {
     NetworkOperations netops = NetworkOperations(
         url:
             'https://corona.lmao.ninja/v2/continents?yesterday=false&sort=cases');
@@ -36,10 +38,19 @@ class _HomePageState extends State<HomePage> {
     coronaContinentDetails = coronaCases;
   }
 
+  getCountryData() async {
+    final NetworkOperations netOps = NetworkOperations(
+        url:
+            'https://corona.lmao.ninja/v2/countries?yesterday=false&sort=cases');
+    var coronaCases = await netOps.getData();
+    coronaCountryDetails = coronaCases;
+  }
+
   @override
   void initState() {
     super.initState();
     getContinentData();
+    getCountryData();
     updateUI(widget.coronaDetails);
   }
 
@@ -116,7 +127,14 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Countries(
+                              countryCases: coronaCountryDetails,
+                            )));
+              },
               child: Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Card(

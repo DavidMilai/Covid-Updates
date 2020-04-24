@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'networkGetters.dart';
+import '../operations/networkGetters.dart';
 
 class listTile extends StatelessWidget {
   listTile({
@@ -15,7 +15,7 @@ class listTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.symmetric(horizontal: 8),
       child: Card(
         elevation: 10,
         child: ListTile(
@@ -40,11 +40,14 @@ class OneListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: EdgeInsets.symmetric(vertical: 5, horizontal: 8),
       child: Card(
         elevation: 10,
         child: ListTile(
-          leading: image,
+          leading: Padding(
+            padding: const EdgeInsets.only(top: 6),
+            child: image,
+          ),
           title: bigText,
         ),
       ),
