@@ -1,74 +1,83 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'networkGetters.dart';
+import 'widgets.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class Continent extends StatefulWidget {
+  final continentDetails;
+  Continent({this.continentDetails});
   @override
   _ContinentState createState() => _ContinentState();
 }
 
 class _ContinentState extends State<Continent> {
+  int africa = 4;
+  int oceania = 5;
+  int southAmerica = 3;
+  int asia = 2;
+  int europe = 0;
+  int northAmerica = 1;
+  GetDetails getDetails;
+
+  final format = NumberFormat("#,###,###,###");
+
+  @override
+  void initState() {
+    super.initState();
+    getDetails = GetDetails(details: widget.continentDetails);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Continent data'),
+        title: Text('Cases per Continent'),
       ),
       body: Container(
         child: StaggeredGridView.count(
+          physics: BouncingScrollPhysics(),
           crossAxisCount: 4,
-          crossAxisSpacing: 4,
-          mainAxisSpacing: 2,
+          mainAxisSpacing: 4,
           staggeredTiles: [
-            StaggeredTile.count(4, 2),
-            StaggeredTile.count(2, 3),
             StaggeredTile.count(2, 2),
-            StaggeredTile.count(2, 1),
-            StaggeredTile.count(2, 1),
-            StaggeredTile.count(1, 1),
-            StaggeredTile.count(1, 1),
+            StaggeredTile.count(2, 2),
+            StaggeredTile.count(2, 2),
+            StaggeredTile.count(2, 2),
+            StaggeredTile.count(2, 2),
+            StaggeredTile.count(2, 2),
           ],
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                elevation: 10,
-              ),
+            ContinentCard(
+              continent: 'Africa',
+              getDetails: getDetails,
+              africa: africa,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                elevation: 10,
-              ),
+            ContinentCard(
+              continent: 'Asia',
+              getDetails: getDetails,
+              africa: asia,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                elevation: 10,
-              ),
+            ContinentCard(
+              continent: 'Europe',
+              getDetails: getDetails,
+              africa: europe,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                elevation: 10,
-              ),
+            ContinentCard(
+              continent: 'North America',
+              getDetails: getDetails,
+              africa: northAmerica,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                elevation: 10,
-              ),
+            ContinentCard(
+              continent: 'Oceania',
+              getDetails: getDetails,
+              africa: oceania,
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                elevation: 10,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                elevation: 10,
-              ),
+            ContinentCard(
+              continent: 'South America',
+              getDetails: getDetails,
+              africa: southAmerica,
             ),
           ],
         ),

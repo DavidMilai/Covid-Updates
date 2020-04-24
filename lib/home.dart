@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'loading.dart';
 import 'package:coronaupdate/continents.dart';
 import 'widgets.dart';
+import 'networkOps.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({this.coronaDetails});
@@ -23,12 +24,22 @@ class _HomePageState extends State<HomePage> {
   double recoveredPer;
   double deadPer;
   double activePer;
+  var coronaContinentDetails;
 
   final format = NumberFormat("#,###,###,###");
+
+  void getContinentData() async {
+    NetworkOperations netops = NetworkOperations(
+        url:
+            'https://corona.lmao.ninja/v2/continents?yesterday=false&sort=cases');
+    var coronaCases = await netops.getData();
+    coronaContinentDetails = coronaCases;
+  }
 
   @override
   void initState() {
     super.initState();
+    getContinentData();
     updateUI(widget.coronaDetails);
   }
 
@@ -55,30 +66,35 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => LoadingScreen()));
-              })
+              }),
         ],
         title: Text('Corona Virus Updates'),
         leading: Container(),
       ),
       body: Container(
         child: StaggeredGridView.count(
+          physics: BouncingScrollPhysics(),
           crossAxisCount: 4,
-          crossAxisSpacing: 4,
+          //crossAxisSpacing: 1,
           mainAxisSpacing: 2,
           staggeredTiles: [
             StaggeredTile.count(2, 2),
             StaggeredTile.count(2, 2),
             StaggeredTile.count(4, 1),
             StaggeredTile.count(4, 1),
-            StaggeredTile.count(2, 1),
-            StaggeredTile.count(2, 1),
+            StaggeredTile.count(4, 1),
+            StaggeredTile.count(4, 1),
             StaggeredTile.count(4, 1),
           ],
           children: <Widget>[
             GestureDetector(
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Continent()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Continent(
+                              continentDetails: coronaContinentDetails,
+                            )));
               },
               child: Padding(
                 padding: EdgeInsets.all(8.0),
@@ -91,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                         Expanded(child: Image.asset('assets/continents.png')),
                         Text(
                           'Continents',
-                          style: TextStyle(fontSize: 30),
+                          style: TextStyle(fontSize: 25),
                         ),
                       ],
                     ),
@@ -99,23 +115,35 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Card(
-                elevation: 20,
-                child: Image.asset(
-                  'assets/names.jpg',
+            GestureDetector(
+              onTap: () {},
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Card(
+                  elevation: 10,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Column(
+                      children: <Widget>[
+                        Expanded(child: Image.asset('assets/flag.png')),
+                        Text(
+                          'Country',
+                          style: TextStyle(fontSize: 25),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
             listTile(
-              smallText: Text('New global cases \n $casesToday '),
+              smallText: Text('New global cases $casesToday'),
               bigText: Text('Global Cases $totalCases'),
               image: Image.asset('assets/world.png'),
             ),
             listTile(
               bigText: Text('Total Deaths $totalDeaths'),
-              smallText: Text('New deaths \n $newDeaths '),
+              smallText: Text('New deaths $newDeaths '),
               image: Image.asset('assets/death.png'),
             ),
             OneListTile(
@@ -141,11 +169,11 @@ class _HomePageState extends State<HomePage> {
                           Text(
                             'Active',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
+                                fontWeight: FontWeight.bold, fontSize: 15),
                           ),
                           Text(
                             '${activePer.round()}%',
-                            style: TextStyle(fontSize: 30),
+                            style: TextStyle(fontSize: 25),
                           )
                         ],
                       ),
@@ -155,11 +183,11 @@ class _HomePageState extends State<HomePage> {
                           Text(
                             'Recovered',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
+                                fontWeight: FontWeight.bold, fontSize: 15),
                           ),
                           Text(
                             '${recoveredPer.round()}%',
-                            style: TextStyle(fontSize: 30),
+                            style: TextStyle(fontSize: 25),
                           )
                         ],
                       ),
@@ -169,11 +197,11 @@ class _HomePageState extends State<HomePage> {
                           Text(
                             'Dead',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
+                                fontWeight: FontWeight.bold, fontSize: 15),
                           ),
                           Text(
                             '${deadPer.round()}%',
-                            style: TextStyle(fontSize: 30),
+                            style: TextStyle(fontSize: 25),
                           )
                         ],
                       ),
@@ -184,6 +212,11 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: Icon(Icons.search, color: Color(0xffeeeeee)),
+        backgroundColor: Color(0x1aF0F8FF),
       ),
     );
   }

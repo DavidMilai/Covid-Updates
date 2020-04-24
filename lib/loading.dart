@@ -9,11 +9,10 @@ class LoadingScreen extends StatefulWidget {
 }
 
 class _LoadingScreenState extends State<LoadingScreen> {
-  void getData() async {
+  getData() async {
     NetworkOperations netops = NetworkOperations(
         url: 'https://corona.lmao.ninja/v2/all?yesterday=false');
     var coronaCases = await netops.getData();
-
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -31,6 +30,15 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.refresh),
+              onPressed: () {
+                getData();
+              })
+        ],
+      ),
       body: Center(
         child: Container(
           child: SpinKitPumpingHeart(
