@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
   getCountryData() async {
     final NetworkOperations netOps = NetworkOperations(
         url:
-            'https://corona.lmao.ninja/v2/countries?yesterday=false&sort=cases');
+            'https://corona.lmao.ninja/v2/countries?yesterday=true&sort=cases');
     var coronaCases = await netOps.getData();
     coronaCountryDetails = coronaCases;
   }
@@ -230,11 +230,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.search, color: Color(0xffeeeeee)),
-        backgroundColor: Color(0x1aF0F8FF),
       ),
     );
   }

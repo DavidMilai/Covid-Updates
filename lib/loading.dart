@@ -2,6 +2,7 @@ import 'screens/home.dart';
 import 'package:flutter/material.dart';
 import 'operations/networkOps.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:connectivity/connectivity.dart';
 
 class LoadingScreen extends StatefulWidget {
   @override
@@ -10,15 +11,36 @@ class LoadingScreen extends StatefulWidget {
 
 class _LoadingScreenState extends State<LoadingScreen> {
   getData() async {
-    NetworkOperations netops = NetworkOperations(
-        url: 'https://corona.lmao.ninja/v2/all?yesterday=false');
-    var coronaCases = await netops.getData();
-    Navigator.push(
+    var net = await Connectivity().checkConnectivity();
+    if (net == ConnectivityResult.none) {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('No internet'),
+              content: Text('You are not connected to a network'),
+              actions: <Widget>[
+                FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: Text('OK'))
+              ],
+            );
+          });
+    } else {
+      NetworkOperations netops = NetworkOperations(
+          url: 'https://corona.lmao.ninja/v2/all?yesterday=false');
+      var coronaCases = await netops.getData();
+      Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => HomePage(
-                  coronaDetails: coronaCases,
-                )));
+          builder: (context) => HomePage(
+            coronaDetails: coronaCases,
+          ),
+        ),
+      );
+    }
   }
 
   @override

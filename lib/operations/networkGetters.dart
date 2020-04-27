@@ -14,12 +14,24 @@ class GetDetails {
     return details[x]['countryInfo']['flag'];
   }
 
+  String getTests(int x) {
+    return format.format(details[x]['tests']);
+  }
+
+  String getCritical(int x) {
+    return format.format(details[x]['critical']);
+  }
+
   String getCountryName(int x) {
     return details[x]['country'];
   }
 
   String getCountryFlag(int x) {
     return details[x]['country'];
+  }
+
+  String searchCountry(String s, int x) {
+    return details[x][s];
   }
 
   String getCases(int number) {
