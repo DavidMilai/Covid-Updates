@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'compareCountries.dart';
 import 'selectedcountry.dart';
 import 'package:coronaupdate/operations/networkGetters.dart';
 
@@ -73,6 +74,24 @@ class _CountriesState extends State<Countries> {
                 });
               })
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Color(0Xefe3ff),
+        child: Icon(
+          Icons.compare_arrows,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CompareCountries(
+                countries: countries,
+                data: widget.countryCases,
+              ),
+            ),
+          );
+        },
       ),
       body: Container(
         padding: EdgeInsets.all(8),

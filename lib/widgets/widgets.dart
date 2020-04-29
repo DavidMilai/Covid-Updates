@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screen_scaler/flutter_screen_scaler.dart';
 import '../operations/networkGetters.dart';
 
 class listTile extends StatelessWidget {
@@ -105,6 +106,113 @@ class ContinentCard extends StatelessWidget {
                 ],
               )
             ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CountryCard extends StatelessWidget {
+  CountryCard({
+    @required this.getDetails,
+    this.countryNumber,
+    @required this.scaler,
+  });
+
+  final GetDetails getDetails;
+  final int countryNumber;
+  final ScreenScaler scaler;
+
+  bool checkNumber(int x) {
+    if (x == null) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(8.0),
+      child: Container(
+        child: Card(
+          elevation: 10,
+          child: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: checkNumber(countryNumber)
+                ? Center(
+                    child: Text(
+                    "You can add another country here!",
+                    textAlign: TextAlign.center,
+                  ))
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: <Widget>[
+                      Image.network(
+                        getDetails.getImage(countryNumber),
+                        height: scaler.getHeight(11),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Cases: ${getDetails.getCases(countryNumber)}\n'
+                        'New cases: ${getDetails.getLatestCases(countryNumber)}\n'
+                        'Recovered: ${getDetails.getRecovered(countryNumber)}\n'
+                        'Death: ${getDetails.getDeaths(countryNumber)}\n'
+                        'New deaths: ${getDetails.getLatestDeaths(countryNumber)}\n'
+                        'Active: ${getDetails.getActive(countryNumber)}\n'
+                        'Tests: ${getDetails.getTests(countryNumber)}',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: scaler.getTextSize(9.3),
+                            wordSpacing: 3,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                'Active',
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              Text(
+                                '${getDetails.getPerActive(countryNumber)}',
+                              )
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                'Recovered',
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              Text(
+                                '${getDetails.getPerRecovered(countryNumber)}',
+                              )
+                            ],
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                'Dead',
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              Text(
+                                '${getDetails.getPerDeath(countryNumber)}',
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
           ),
         ),
       ),

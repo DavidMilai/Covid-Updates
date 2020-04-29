@@ -27,6 +27,11 @@ dependencies:
   flutter_staggered_grid_view: ^0.3.0
   flutter_spinkit: ^4.1.2+1
   connectivity: ^0.4.8+2
+  flip_card: ^0.4.4
+  fluttertoast: ^4.0.0
+  flutter_screen_scaler: ^2.0.0
+
+
 
 
 dev_dependencies:

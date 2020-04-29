@@ -60,6 +60,47 @@ class _SelectedCountryState extends State<SelectedCountry> {
                         'Active: ${getDetails.getActive(number)}\n'
                         'Critical: ${getDetails.getCritical(number)}'),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'Active',
+                            ),
+                            Text(
+                              '${getDetails.getPerActive(number)}',
+                            )
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'Recovered',
+                            ),
+                            Text(
+                              '${getDetails.getPerRecovered(number)}',
+                            )
+                          ],
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              'Dead',
+                            ),
+                            Text(
+                              '${getDetails.getPerDeath(number)}',
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
