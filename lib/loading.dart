@@ -63,9 +63,9 @@ class _LoadingScreenState extends State<LoadingScreen> {
       ),
       body: Center(
         child: Container(
-          child: SpinKitPumpingHeart(
+          child: SpinKitChasingDots(
             color: Colors.white,
-            size: 150.0,
+            size: 120.0,
           ),
         ),
       ),

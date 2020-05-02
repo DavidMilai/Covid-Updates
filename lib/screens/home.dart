@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> {
   getCountryData() async {
     final NetworkOperations netOps = NetworkOperations(
         url:
-            'https://corona.lmao.ninja/v2/countries?yesterday=true&sort=cases');
+            'https://corona.lmao.ninja/v2/countries?yesterday=false&sort=cases');
     var coronaCases = await netOps.getData();
     coronaCountryDetails = coronaCases;
   }

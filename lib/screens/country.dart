@@ -52,7 +52,7 @@ class _CountriesState extends State<Countries> {
     return Scaffold(
       appBar: AppBar(
         title: isSearching
-            ? Text('Cases per Continent')
+            ? Text('Cases per Country')
             : TextField(
                 autofocus: true,
                 onChanged: (value) {
@@ -117,8 +117,10 @@ class _CountriesState extends State<Countries> {
                           },
                           child: Card(
                             child: ListTile(
-                              leading:
-                                  Image.network(getDetails.getImage(index)),
+                              leading: Image.network(
+                                getDetails.getImage(index),
+                                width: 100,
+                              ),
                               title:
                                   Text('${getDetails.getCountryName(index)}'),
                               subtitle: Text(
