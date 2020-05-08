@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'compareCountries.dart';
 import 'selectedcountry.dart';
+import 'package:coronaupdate/operations/networkOps.dart';
 import 'package:coronaupdate/operations/networkGetters.dart';
 
 class Countries extends StatefulWidget {
   final countryCases;
-  Countries({@required this.countryCases});
+  final latestCases;
+  Countries({@required this.countryCases, @required this.latestCases});
 
   @override
   _CountriesState createState() => _CountriesState();
@@ -18,9 +20,11 @@ class _CountriesState extends State<Countries> {
   String selectedCountry;
   int result = 0;
   List countries = [];
+  var latestCases;
   @override
   void initState() {
     super.initState();
+    latestCases = widget.latestCases;
     getDetails = GetDetails(details: widget.countryCases);
     updateCountries();
   }
@@ -86,6 +90,7 @@ class _CountriesState extends State<Countries> {
             context,
             MaterialPageRoute(
               builder: (context) => CompareCountries(
+                latestData: latestCases,
                 countries: countries,
                 data: widget.countryCases,
               ),

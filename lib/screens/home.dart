@@ -27,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   double activePer;
   var coronaContinentDetails;
   var coronaCountryDetails;
+  var latestData;
 
   final format = NumberFormat("#,###,###,###");
 
@@ -38,10 +39,18 @@ class _HomePageState extends State<HomePage> {
     coronaContinentDetails = coronaCases;
   }
 
+  getLatestData() async {
+    final NetworkOperations netops = NetworkOperations(
+        url:
+            'https://corona.lmao.ninja/v2/countries?yesterday=false&sort=cases');
+    var coronaCases = await netops.getData();
+    latestData = coronaCases;
+  }
+
   getCountryData() async {
     final NetworkOperations netOps = NetworkOperations(
         url:
-            'https://corona.lmao.ninja/v2/countries?yesterday=false&sort=cases');
+            'https://corona.lmao.ninja/v2/countries?yesterday=true&sort=cases');
     var coronaCases = await netOps.getData();
     coronaCountryDetails = coronaCases;
   }
@@ -51,6 +60,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     getContinentData();
     getCountryData();
+    getLatestData();
     updateUI(widget.coronaDetails);
   }
 
@@ -132,6 +142,7 @@ class _HomePageState extends State<HomePage> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => Countries(
+                              latestCases: latestData,
                               countryCases: coronaCountryDetails,
                             )));
               },

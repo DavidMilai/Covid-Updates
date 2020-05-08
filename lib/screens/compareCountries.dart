@@ -7,7 +7,11 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 class CompareCountries extends StatefulWidget {
   final countries;
   final data;
-  CompareCountries({@required this.countries, @required this.data});
+  final latestData;
+  CompareCountries(
+      {@required this.countries,
+      @required this.latestData,
+      @required this.data});
   @override
   _CompareCountriesState createState() => _CompareCountriesState();
 }
@@ -301,6 +305,7 @@ class _CompareCountriesState extends State<CompareCountries> {
                               MaterialPageRoute(
                                   builder: (context) => ResultsPage(
                                         countryOne: resultOne,
+                                        latestData: widget.latestData,
                                         countryTwo: resultTwo,
                                         countryThree: resultThree,
                                         countryFour: resultFour,

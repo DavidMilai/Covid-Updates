@@ -116,11 +116,13 @@ class ContinentCard extends StatelessWidget {
 class CountryCard extends StatelessWidget {
   CountryCard({
     @required this.getDetails,
+    @required this.getLatestDetails,
     this.countryNumber,
     @required this.scaler,
   });
 
   final GetDetails getDetails;
+  final GetDetails getLatestDetails;
   final int countryNumber;
   final ScreenScaler scaler;
 
@@ -156,13 +158,14 @@ class CountryCard extends StatelessWidget {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        'Cases: ${getDetails.getCases(countryNumber)}\n'
-                        'New cases: ${getDetails.getLatestCases(countryNumber)}\n'
-                        'Recovered: ${getDetails.getRecovered(countryNumber)}\n'
-                        'Death: ${getDetails.getDeaths(countryNumber)}\n'
+                        'Cases: ${getLatestDetails.getCases(countryNumber)}\n'
+                        'Yesterday cases: ${getDetails.getLatestCases(countryNumber)}\n'
+                        'Today cases: ${getLatestDetails.getLatestCases(countryNumber)}\n'
+                        'Recovered: ${getLatestDetails.getRecovered(countryNumber)}\n'
+                        'Death: ${getLatestDetails.getDeaths(countryNumber)}\n'
                         'New deaths: ${getDetails.getLatestDeaths(countryNumber)}\n'
-                        'Active: ${getDetails.getActive(countryNumber)}\n'
-                        'Tests: ${getDetails.getTests(countryNumber)}',
+                        'Active: ${getLatestDetails.getActive(countryNumber)}\n'
+                        'Tests: ${getLatestDetails.getTests(countryNumber)}',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: scaler.getTextSize(9.3),

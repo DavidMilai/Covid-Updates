@@ -11,11 +11,13 @@ class ResultsPage extends StatefulWidget {
   final int countryThree;
   final int countryFour;
   final data;
+  final latestData;
   ResultsPage(
       {this.countryOne,
       this.countryTwo,
       this.countryThree,
       this.countryFour,
+      @required this.latestData,
       @required this.data});
   @override
   _ResultsPageState createState() => _ResultsPageState();
@@ -23,6 +25,7 @@ class ResultsPage extends StatefulWidget {
 
 class _ResultsPageState extends State<ResultsPage> {
   GetDetails getDetails;
+  GetDetails getLatestDetails;
   int countryOne;
   int countryTwo;
   int countryThree;
@@ -32,6 +35,7 @@ class _ResultsPageState extends State<ResultsPage> {
   void initState() {
     super.initState();
     getDetails = GetDetails(details: widget.data);
+    getLatestDetails = GetDetails(details: widget.latestData);
     countryOne = widget.countryOne;
     countryTwo = widget.countryTwo;
     countryThree = widget.countryThree;
@@ -58,18 +62,22 @@ class _ResultsPageState extends State<ResultsPage> {
           ],
           children: <Widget>[
             CountryCard(
+                getLatestDetails: getLatestDetails,
                 getDetails: getDetails,
                 countryNumber: countryOne,
                 scaler: scaler),
             CountryCard(
+                getLatestDetails: getLatestDetails,
                 getDetails: getDetails,
                 countryNumber: countryTwo,
                 scaler: scaler),
             CountryCard(
+                getLatestDetails: getLatestDetails,
                 getDetails: getDetails,
                 countryNumber: countryThree,
                 scaler: scaler),
             CountryCard(
+                getLatestDetails: getLatestDetails,
                 getDetails: getDetails,
                 countryNumber: countryFour,
                 scaler: scaler),
